@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 
 const AttendeesPage = () => {
   const [attendees, setAttendees] = useState([]);
@@ -10,33 +10,51 @@ const AttendeesPage = () => {
   }, []);
 
   return (
-    <div className="p-6 bg-[#d59444] rounded-lg shadow-lg text-white">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b border-white">
-            <th className="text-left p-2">Name</th>
-            <th className="text-left p-2">Phone</th>
-            <th className="text-left p-2">Gender</th>
-            <th className="text-left p-2">Denomination</th>
-            <th className="text-left p-2">Place of Residence</th>
-            <th className="text-left p-2 w-[150px]">How did you hear about the event?</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          {attendees.map((attendee, index) => (
-            <tr key={index} className="border-b border-white">
-              <td className="p-2 ">{attendee.name}</td>
-              <td className="p-2">{attendee.phone}</td>
-              <td className="p-2 text-center">{attendee.gender}</td>
-              <td className="p-2 text-center">{attendee.denomination}</td>
-              <td className="p-2 text-center">{attendee.residence}</td>
-              <td className="p-2 text-center">{attendee.source}</td>
-            
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="flex flex-col items-center justify-center min-h-screen ">
+      {/* Page Container */}
+      <div className="w-full max-w-6xl bg-white p-6 shadow-lg border-4 border-orange-500 rounded-3xl overflow-x-auto">
+        <h1 className="text-3xl font-bold text-center text-orange-600 mb-4">Attendees List</h1>
+        <p className="text-center text-gray-600 mb-6">Here are the people who have checked in.</p>
+
+        {/* Responsive Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-orange-500">
+            <thead>
+              <tr className="bg-orange-500 text-white">
+                <th className="text-left p-3 border border-orange-400">Name</th>
+                <th className="text-left p-3 border border-orange-400">Phone</th>
+                <th className="text-center p-3 border border-orange-400">Gender</th>
+                <th className="text-center p-3 border border-orange-400">Denomination</th>
+                <th className="text-center p-3 border border-orange-400">Place of Residence</th>
+                <th className="text-center p-3 border border-orange-400 w-[200px]">How did you hear about the event?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {attendees.length > 0 ? (
+                attendees.map((attendee, index) => (
+                  <tr key={index} className="border-b border-orange-300 hover:bg-orange-100 transition">
+                    <td className="p-3 border border-orange-300">{attendee.name}</td>
+                    <td className="p-3 border border-orange-300">{attendee.phone}</td>
+                    <td className="p-3 border border-orange-300 text-center">{attendee.gender}</td>
+                    <td className="p-3 border border-orange-300 text-center">{attendee.denomination}</td>
+                    <td className="p-3 border border-orange-300 text-center">{attendee.residence}</td>
+                    <td className="p-3 border border-orange-300 text-center">{attendee.source}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center text-gray-500 p-4">No attendees checked in yet.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Back to Check-in Button */}
+      <Link to="/" className="mt-6 px-5 py-3 bg-orange-500 text-white rounded-lg shadow-lg hover:shadow-xl transition">
+        Back to Check-in
+      </Link>
     </div>
   );
 };

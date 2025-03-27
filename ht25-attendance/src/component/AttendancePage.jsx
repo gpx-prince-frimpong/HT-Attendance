@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 
 const AttendancePage = () => {
   const [name, setName] = useState("");
@@ -18,7 +18,7 @@ const AttendancePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim() && phone.trim()) {
-      const newAttendee = { id: Date.now(), name, phone, gender, denomination, residence,source };
+      const newAttendee = { id: Date.now(), name, phone, gender, denomination, residence, source };
       const updatedAttendees = [...attendees, newAttendee];
       setAttendees(updatedAttendees);
       localStorage.setItem("attendees", JSON.stringify(updatedAttendees));
@@ -28,75 +28,59 @@ const AttendancePage = () => {
       setDenomination("");
       setResidence("");
       setSource("");
-  
     }
   };
 
   return (
-    <div className="bg-white p-6 shadow-xl rounded-lg w-96 ">
-      <h1 className="text-2xl font-bold mb-4 text-orange-600 text-center">
-        Check-in for The Pentecost Experience
-      </h1>
-      <form onSubmit={handleSubmit} className=" ">
-        <div className="flex gap-3">
-        <div className=""><input
-          type="text"
-          placeholder="Enter Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border p-3 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Enter Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          className="border p-3 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Gender"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          className="border p-3 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-          required
-        /></div>
-        <div className=""> <input
-          type="text"
-          placeholder="Denomination"
-          value={denomination}
-          onChange={(e) => setDenomination(e.target.value)}
-          className="border p-3 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Place of Residence"
-          value={residence}
-          onChange={(e) => setResidence(e.target.value)}
-          className="border p-3 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-          required
-        />
-        <input
-          type="text"
-          placeholder="How did you hear about the event?"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-          className="border p-3 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-          required
-        /></div>
-        </div>
-        
-       
-        <button
-          type="submit"
-          className="bg-orange-500 text-white px-4 py-3 rounded w-full font-semibold shadow-md hover:scale-105 transition-transform"
-        >
-          Check-in
-        </button>
-      </form>
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 mt-5">
+      {/* Main Card */}
+      <div className="bg-white p-6 shadow-md border-[7px] border-orange-600 rounded-2xl w-[350px] sm:w-[350px] transform transition-all duration-500 hover:scale-105">
+        <h1 className="text-xl sm:text-2xl font-semibold text-center text-orange-600 pb-2"> The Pentecost Experience </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)}
+            className="w-full p-2 text-sm border rounded-xl focus:ring-2 focus:ring-orange-400" required />
+
+          <input type="text" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)}
+            className="w-full p-2 text-sm border rounded-xl focus:ring-2 focus:ring-orange-400" required />
+
+          <select value={gender} onChange={(e) => setGender(e.target.value)}
+            className="w-full p-2 text-sm border rounded-xl bg-white focus:ring-2 focus:ring-orange-400" required>
+            <option value="" disabled>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+
+          <input type="text" placeholder="Denomination" value={denomination} onChange={(e) => setDenomination(e.target.value)}
+            className="w-full p-2 text-sm border rounded-xl focus:ring-2 focus:ring-orange-400" required />
+
+          <input type="text" placeholder="Residence" value={residence} onChange={(e) => setResidence(e.target.value)}
+            className="w-full p-2 text-sm border rounded-xl focus:ring-2 focus:ring-orange-400" required />
+
+          <select value={source} onChange={(e) => setSource(e.target.value)}
+            className="w-full p-2 text-sm border rounded-xl bg-white focus:ring-2 focus:ring-orange-400" required>
+            <option value="" disabled>How did you hear about us?</option>
+            <option value="Church Announcement">Church Announcement</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Friend">Friend</option>
+            <option value="Media and Publications">Media and Publications</option>
+            <option value="Others">Others</option>
+          </select>
+
+          <button type="submit"
+            className="w-full bg-orange-500 text-white py-2 rounded-2xl font-semibold shadow-md transition-all hover:scale-105 hover:shadow-lg">
+             Check-in
+          </button>
+        </form>
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex space-x-4 mt-5">
+        <Link to="/attendees"
+          className="px-4 py-2 bg-red-500 text-white rounded-xl text-sm shadow-md hover:shadow-lg transition">
+          📋 View Attendees
+        </Link>
+      </div>
     </div>
   );
 };
